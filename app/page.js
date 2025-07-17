@@ -1,103 +1,263 @@
-import Image from "next/image";
+'use client';
+
+import NoFeesInfo from '@/component/NoFeesInfo';
+import WhoCanApply from '@/component/WhoCanApply';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    jobRole: '',
+    photo: null,
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    setFormData((prev) => ({ ...prev, photo: e.target.files[0] }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('phone', formData.phone);
+    data.append('address', formData.address);
+    data.append('jobRole', formData.jobRole);
+    data.append('photo', formData.photo);
+
+    // Simulate API call
+    fetch('/api/submit', {
+      method: 'POST',
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((res) => alert('Form submitted successfully!'))
+      .catch((err) => alert('Error submitting form'));
+  };
+
+  return (
+    <div className=''>
+
+      
+
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#5C3B58] p-4">
+      <h1 className="text-4xl font-bold text-white mb-8">Job Application</h1>
+
+      <div className="flex flex-col items-center w-full">
+        <WhoCanApply />
+      </div>
+
+        <Card className="w-1/3 h-full p-8">
+          <CardHeader className="px-0 pt-0">
+            <CardTitle>
+              Job Application Form
+            </CardTitle>
+          </CardHeader>
+          <CardDescription>
+            Use your Whatsapp Number for registration.
+          </CardDescription>
+
+          <CardContent className="space-y-5 px-0 pb-0">
+            <form onSubmit={handleSubmit} className="space-y-2.5">
+
+              <label className="block mb-2 font-medium">Name</label>
+              <Input
+                type="text"
+                name="name"
+                className="w-full mb-4 px-3 py-2 border border-gray-300 rounded"
+                onChange={handleChange}
+                required
+              />
+
+              <label className="block mb-2 font-medium ">Whatsapp Number</label>
+              <input
+                type="tel"
+                name="phone"
+                className="w-full mb-4 px-3 py-2 border border-gray-300 rounded"
+                onChange={handleChange}
+                required
+              />
+
+              <label className="block mb-2 font-medium">Address</label>
+              <input
+                name="address"
+                className="w-full mb-4 px-3 py-2 border border-gray-300 rounded"
+                rows={3}
+                onChange={handleChange}
+                required
+              />
+
+              <label className="block mb-2 font-medium">Job Role</label>
+              <div className="mb-4 space-y-4">
+
+                {/* Receptionist - Moderate Paying */}
+                <label className="block">
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="jobRole"
+                      value="Receptionist"
+                      checked={formData.jobRole === 'Receptionist'}
+                      onChange={handleChange}
+                      className="mr-2 mt-1"
+                    />
+                    <div>
+                      <span className="font-medium">Receptionist (On Site)</span>
+                      <div className="text-sm text-gray-600">
+                        Work in hotels or front offices. Good communication skills preferred.
+                      </div>
+                      <div className="mt-1 text-sm text-yellow-600">
+                        ＝ Moderate Paying
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                {/* Call Center - Low Paying */}
+                <label className="block">
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="jobRole"
+                      value="Call Center"
+                      checked={formData.jobRole === 'Call Center'}
+                      onChange={handleChange}
+                      className="mr-2 mt-1"
+                    />
+                    <div>
+                      <span className="font-medium">Call Center (Work From Home)</span>
+                      <div className="text-sm text-gray-600">
+                        Voice or non-voice process. Basic computer knowledge required.
+                      </div>
+                      <div className="mt-1 text-sm text-red-600">
+                        ▼ Low Paying
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                {/* Model - High Paying */}
+                <label className="block">
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="jobRole"
+                      value="Model"
+                      checked={formData.jobRole === 'Model'}
+                      onChange={handleChange}
+                      className="mr-2 mt-1"
+                    />
+                    <div>
+                      <span className="font-medium">Modeling (On Site)</span>
+                      <div className="text-sm text-gray-600">
+                        For photo shoots, brand promotions. Must be confident and presentable.
+                      </div>
+                      <div className="mt-1 text-sm text-green-600">
+                        ▲ High Paying
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                {/* Security - Low Paying */}
+                <label className="block">
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="jobRole"
+                      value="Security"
+                      checked={formData.jobRole === 'Security'}
+                      onChange={handleChange}
+                      className="mr-2 mt-1"
+                    />
+                    <div>
+                      <span className="font-medium">Security (On Site)</span>
+                      <div className="text-sm text-gray-600">
+                        Guard duties at commercial and residential sites. Physical fitness required.
+                      </div>
+                      <div className="mt-1 text-sm text-red-600">
+                        ▼ Low Paying
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                {/* Photographer - Disabled - High Paying */}
+                <label className="block opacity-50 cursor-not-allowed">
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="jobRole"
+                      value="Photographer"
+                      checked={formData.jobRole === 'Photographer'}
+                      onChange={handleChange}
+                      className="mr-2 mt-1"
+                      disabled
+                    />
+                    <div>
+                      <span className="font-medium">Photographer</span>
+                      <div className="text-sm text-gray-600">
+                        Role temporarily closed. Will reopen soon.
+                      </div>
+                      <div className="mt-1 text-sm text-green-600">
+                        ▲ High Paying
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+              </div>
+
+              <label className="block mb-2 font-medium">Upload Photo</label>
+              <div className="relative w-full mb-6">
+                <label
+                  htmlFor="photo-upload"
+                  className="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-800 rounded cursor-pointer hover:bg-gray-300 transition"
+                >
+                  📸 Choose Photo
+                </label>
+                <input
+                  id="photo-upload"
+                  type="file"
+                  name="photo"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  required
+                />
+                {formData.photo && (
+                  <div className="mt-2 text-sm text-white">
+                    Selected: <span className="text-green-300">{formData.photo.name}</span>
+                  </div>
+                )}
+              </div>
+
+
+              <Button
+                type="submit"
+                className="bg-black text-white px-4 py-2 rounded hover:bg-slate-900 transition w-full cursor-pointer"
+              >Submit</Button>
+            </form>
+          </CardContent>
+
+          
+        </Card>
+
+      <div className="flex flex-col items-center w-full pt-6">
+        <NoFeesInfo />
+      </div>
+
+      </div>
     </div>
   );
 }
