@@ -1,6 +1,6 @@
 export default function WhoCanApply() {
   return (
-    <div className="w-1/3 bg-white text-black rounded-2xl p-8 mb-6 shadow-md">
+    <div className="w-full md:w-1/3 bg-white text-black rounded-2xl p-8 mb-6 shadow-md">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">🌟 Who Can Apply?</h2>
       <p className="text-base text-center mb-4">
         We’re always looking for smart, sincere, and presentable candidates, especially:

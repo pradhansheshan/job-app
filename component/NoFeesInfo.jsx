@@ -1,6 +1,6 @@
 export default function NoFeesInfo() {
   return (
-    <div className="w-1/3 bg-white text-black rounded-2xl p-8 mb-6 shadow-md">
+    <div className="w-full md:w-1/3 bg-white text-black rounded-2xl p-8 mb-6 shadow-md">
       <h2 className="text-2xl md:text-3xl font-bold text-center text-red-600 mb-4">
         📝 100% FREE Registration, No Advance Fees.
       </h2>

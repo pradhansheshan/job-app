@@ -119,7 +119,7 @@ export default function Home() {
           <WhoCanApply />
         </div>
 
-        <Card className="w-1/3 h-full p-8">
+        <Card className="w-full md:w-1/3 h-full p-8">
           <CardHeader className="px-0 pt-0">
             <CardTitle>Job Application Form</CardTitle>
           </CardHeader>
