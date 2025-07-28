@@ -27,6 +27,8 @@ export default function Home() {
     photo: '',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -82,6 +84,8 @@ export default function Home() {
       return;
     }
 
+    setLoading(true);
+
     const data = new FormData();
     data.append('file', photo);
     data.append('username', name);
@@ -107,7 +111,8 @@ export default function Home() {
       .catch((err) => {
         console.error(err);
         alert('Error submitting form');
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -259,9 +264,14 @@ export default function Home() {
 
               <Button
                 type="submit"
-                className="bg-black text-white px-4 py-2 rounded hover:bg-slate-900 transition w-full cursor-pointer"
+                className={`w-full cursor-pointer px-4 py-2 rounded transition ${
+                  loading
+                    ? 'bg-gray-700 text-white hover:bg-gray-700'
+                    : 'bg-black text-white hover:bg-slate-900'
+                }`}
+                disabled={loading}
               >
-                Submit
+                {loading ? 'Submitting...' : 'Submit'}
               </Button>
             </form>
           </CardContent>
